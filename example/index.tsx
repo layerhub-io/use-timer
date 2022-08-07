@@ -4,12 +4,13 @@ import * as ReactDOM from 'react-dom';
 import { TimerProvider, useTimer } from '../.';
 
 const App = () => {
-  const { start, time, pause, reset } = useTimer();
+  const { start, time, pause, reset, setTime } = useTimer();
   return (
     <div>
       <div onClick={start}>start</div>
       <div onClick={pause}>pause</div>
       <div onClick={reset}>reset</div>
+      <div onClick={() => setTime(1000)}>set time 10</div>
       <div>{time}</div>
     </div>
   );

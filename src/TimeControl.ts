@@ -1,22 +1,22 @@
 import { SetStatus, SetTime, Status } from './types';
 
 class TimeControl {
-  private time: number;
+  public time: number;
   private interval: NodeJS.Timer;
   private lastUpdatedTime: number;
-  private setTime: SetTime;
+  private updateTime: SetTime;
   private setStatus: SetStatus;
   private status: Status;
 
   constructor({
-    setTime,
+    updateTime,
     setStatus,
   }: {
-    setTime: SetTime;
+    updateTime: SetTime;
     setStatus: SetStatus;
   }) {
     this.status = 'STOPPED';
-    this.setTime = setTime;
+    this.updateTime = updateTime;
     this.setStatus = setStatus;
     this.time = 0;
   }
@@ -29,7 +29,7 @@ class TimeControl {
       const deltaTime = now - this.lastUpdatedTime;
       this.lastUpdatedTime = now;
       this.time = this.time + deltaTime;
-      this.setTime(this.time);
+      this.updateTime(this.time);
       this.status = 'RUNNING';
       this.setStatus('RUNNING');
     }, 16);
@@ -49,8 +49,13 @@ class TimeControl {
       this.time = 0;
       this.status = 'STOPPED';
       this.setStatus('STOPPED');
-      this.setTime(0);
+      this.updateTime(0);
     }
+  }
+
+  public setTime(time: number) {
+    this.time = time;
+    this.updateTime(time);
   }
   public destroy = () => {
     if (this.interval) {
