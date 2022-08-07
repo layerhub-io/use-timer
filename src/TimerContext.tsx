@@ -37,7 +37,6 @@ export const TimerProvider = ({ children }: { children: React.ReactNode }) => {
 
   const setTime = React.useCallback(
     (newTime: number) => {
-      console.log('Setting time');
       if (timeControl) {
         timeControl.setTime(newTime);
       }
